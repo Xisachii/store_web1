@@ -1,12 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Dokon</title>
+    <title>Muslim Quiz Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background: #fff;
+            font-family: sans-serif;
+            text-align: center;
+            padding: 30px;
+        }
+        h1 {
+            color: #006400;
+        }
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            margin-top: 20px;
+            background-color: #008000;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Salom Dokon</h1>
-    
+    <h1>🎮 Muslim Quiz Mini App</h1>
+    <p id="info">Ma'lumot yuklanmoqda...</p>
+    <button onclick="startGame()">O‘yinni boshlash</button>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();  // Fullscreen
+
+        let userId = tg.initDataUnsafe.user?.id;
+        let firstName = tg.initDataUnsafe.user?.first_name;
+
+        document.getElementById("info").innerText = `Salom, ${firstName}! Mini o‘yingizga xush kelibsiz.`;
+
+        function startGame() {
+            alert("O‘yin boshlandi! Bu yerga o‘yin kodlari yoziladi.");
+        }
+    </script>
 </body>
 </html>
