@@ -5,12 +5,27 @@ async function loadUsers() {
   const userList = document.getElementById("user-list");
   userList.innerHTML = "";
 
+  let row = document.createElement("div");
+  row.className = "user-row";
+
   users.forEach((user, index) => {
-    const div = document.createElement("div");
-    div.className = "user";
-    div.innerText = user.name;
-    userList.appendChild(div);
+    const userDiv = document.createElement("div");
+    userDiv.className = "user";
+    userDiv.innerText = user.name;
+    row.appendChild(userDiv);
+
+    // Har 5 ta foydalanuvchidan keyin yangi qatordan boshlash
+    if ((index + 1) % 5 === 0) {
+      userList.appendChild(row);
+      row = document.createElement("div");
+      row.className = "user-row";
+    }
   });
+
+  // Oxirgi qatorda foydalanuvchi qolgan bo‘lsa
+  if (row.children.length > 0) {
+    userList.appendChild(row);
+  }
 }
 
 loadUsers();
