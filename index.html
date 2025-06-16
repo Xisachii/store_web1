@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Muslim Quiz Mini App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            background: #fff;
-            font-family: sans-serif;
-            text-align: center;
-            padding: 30px;
-        }
-        h1 {
-            color: #006400;
-        }
-        button {
-            padding: 10px 25px;
-            font-size: 18px;
-            margin-top: 20px;
-            background-color: #008000;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <title>Muslim Reyting</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    
     <h1>🎮 Muslim Quiz Mini App</h1>
     <p id="info">Ma'lumot yuklanmoqda...</p>
     <button onclick="startGame()">O‘yinni boshlash</button>
     <a href="https://t.me/musulmon_quiz_777_bot" target="_blank">🤖 Botga qaytish</a>
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();  // Fullscreen
-
-        let userId = tg.initDataUnsafe.user?.id;
-        let firstName = tg.initDataUnsafe.user?.first_name;
-
-        document.getElementById("info").innerText = `Salom, ${firstName}! Mini o‘yingizga xush kelibsiz.`;
-
-        function startGame() {
-            alert("O‘yin boshlandi! Bu yerga o‘yin kodlari yoziladi.");
-        }
+    <div class="container">
+        <h1>🏆 Reyting</h1>
+        <ul id="user-list"></ul>
+    </div>
+    
+    <script src="app.js">
+        fetch("http://http://192.168.100.91:8000/users")
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById('user-list');
+          Object.values(data).forEach(user => {
+            const div = document.createElement('div');
+            div.textContent = `👤 ${user.name} | 📱 ${user.phone} | 🎯 ${user.points} ball`;
+            container.appendChild(div);
+        });
+      })
+      .catch(err => {
+        console.error("Fayl yuklab bo‘lmadi:", err);
+      });
     </script>
 </body>
 </html>
