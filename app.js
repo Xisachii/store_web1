@@ -1,19 +1,20 @@
 async function loadUsers() {
+  const listElement = document.getElementById('user-list');
   try {
-    const response = await fetch('http://http://192.168.100.91:8000/users');
-    const data = await response.json();
+    const res = await fetch('http://192.168.100.91:8000/users');
+    const data = await res.json();
+    listElement.innerHTML = '';
 
-    const list = document.getElementById('user-list');
-    const sorted = Object.entries(data).sort((a, b) => b[1].points - a[1].points);
-
-    sorted.forEach(([id, user], index) => {
+    for (const id in data) {
+      const user = data[id];
       const item = document.createElement('li');
-      item.textContent = `${index + 1}. ${user.name} - ${user.points} ball`;
-      list.appendChild(item);
-    });
+      item.textContent = `${user.name || 'Nomaʼlum'} — ${user.points} ball`;
+      listElement.appendChild(item);
+    }
   } catch (err) {
-    alert("Ma'lumot yuklanmadi: " + err);
+    listElement.innerHTML = '❌ Maʼlumot yuklab bo‘lmadi';
+    console.error(err);
   }
 }
 
-loadUsers();
+window.addEventListener('load', loadUsers);
