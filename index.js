@@ -1,6 +1,6 @@
 async function loadUsers() {
   try {
-    const response = await fetch("http://192.168.100.91:8000/users");
+    const response = await fetch("https://YOUR_SERVER_ADDRESS/users");
     const users = await response.json();
 
     const userList = document.getElementById("user-list");
