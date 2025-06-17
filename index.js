@@ -1,21 +1,25 @@
-=async function loadUsers() {
-  try {
-    const response = await fetch("https://mylink.loca.lt/users"); // <-- LocalTunnel linkni shu yerga yozing
-    const users = await response.json();
+const API_BASE = "https://flask-users-api.onrender.com/"; // Masalan: https://users-api.onrender.com
 
-    const userList = document.getElementById("user-list");
-    userList.innerHTML = "";
+fetch(`${API_BASE}/users`)
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("users");
+    container.innerHTML = "";
 
-    users.forEach((user, index) => {
-      const div = document.createElement("div");
-      div.className = "user";
-      div.innerText = user.name;
-      userList.appendChild(div);
+    let row = "";
+    data.forEach((user, index) => {
+      row += `${user.name} `;
+      if ((index + 1) % 5 === 0) {
+        container.innerHTML += `<div>${row}</div>`;
+        row = "";
+      }
     });
-  } catch (error) {
-    alert("Ma'lumotlarni olishda xatolik yuz berdi.");
-    console.error(error);
-  }
-}
 
-loadUsers();
+    if (row) {
+      container.innerHTML += `<div>${row}</div>`;
+    }
+  })
+  .catch(err => {
+    document.getElementById("users").innerText = "Ma'lumotlarni olishda xatolik yuz berdi.";
+    console.error(err);
+  });
